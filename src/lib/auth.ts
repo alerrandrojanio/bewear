@@ -21,4 +21,7 @@ export const auth = betterAuth({
   account: {
     modelName: "accountTable",
   },
+  verification: {
+    modelName: "verificationTable",
+  },
 });

@@ -62,17 +62,16 @@ export function SignUp() {
     await authClient.signUp.email({
       name: values.name,
       email: values.email,
-      password: values.email,
+      password: values.password,
       fetchOptions: {
         onSuccess: () => {
           router.push("/");
         },
         onError: (error) => {
           if (error.error.code === "USER_ALREADY_EXISTS") {
-            toast.error("Email ou senha inválidos!");
-
-            form.setError("email", {
-              message: "Email já cadastrado!",
+            toast.error("E-mail já cadastrado.");
+            return form.setError("email", {
+              message: "E-mail já cadastrado.",
             });
           }
 
@@ -84,14 +83,15 @@ export function SignUp() {
 
   return (
     <>
-      <Card>
+      <Card className="w-full">
         <CardHeader>
           <CardTitle>Criar conta</CardTitle>
-          <CardDescription>Crie uma conta para continuar</CardDescription>
+          <CardDescription>Crie uma conta para continuar.</CardDescription>
         </CardHeader>
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <CardContent className="grid gap-6">
+            <CardContent className="grid w-full gap-6">
               <FormField
                 control={form.control}
                 name="name"
@@ -137,6 +137,7 @@ export function SignUp() {
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
                 name="passwordConfirmation"
@@ -145,7 +146,7 @@ export function SignUp() {
                     <FormLabel>Confirmar senha</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Digite sua senha"
+                        placeholder="Digite a sua senha novamente"
                         type="password"
                         {...field}
                       />

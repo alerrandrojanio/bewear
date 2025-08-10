@@ -26,12 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      data-darkreader-mode="dynamic"
-      data-darkreader-scheme="dark"
-      data-darkreader-proxy-injected="true"
-    >
+    <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

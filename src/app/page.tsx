@@ -1,12 +1,23 @@
+import { desc } from "drizzle-orm";
 import Image from "next/image";
 
 import CategorySelector from "@/components/common/category-selector";
+import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 import ProductList from "@/components/common/product-list";
 import { db } from "@/db";
+import { productTable } from "@/db/schema";
 
 export default async function Home() {
   const products = await db.query.productTable.findMany({
+    with: {
+      variants: true,
+    },
+  });
+
+  const newlyCreatedProducts = await db.query.productTable.findMany({
+    orderBy: [desc(productTable.createdAt)],
+    limit: 4,
     with: {
       variants: true,
     },
@@ -17,7 +28,7 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <div className="space-y-6">
+      <main className="space-y-6">
         <div className="px-5">
           <Image
             src="/banner-01.png"
@@ -45,7 +56,10 @@ export default async function Home() {
             className="h-auto w-full"
           />
         </div>
-      </div>
+
+        <ProductList products={newlyCreatedProducts} title="Novos produtos" />
+      </main>
+      <Footer />
     </>
   );
 }
